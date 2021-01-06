@@ -10,7 +10,7 @@
                 <div class="card-body">
                     @if ($post)
 
-                    <form action="{{route('post.update', $post->_id)}}" method="POST">
+                    <form action="{{route('post.update', $post->_id)}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="form-group">
@@ -21,12 +21,16 @@
                             <label for="">Content:</label>
                             <textarea type="text" class="form-control" name="content">{{$post->content}}</textarea>
                         </div>
+                        <div class="form-group">
+                            <img src="{{asset('storage/' . $post->image)}}" alt="">
+                            <input class="form-control" name="image" type="file">
+                        </div>
                         <button class="btn btn-primary">Save</button>
                     </form>
 
                     @else
 
-                    <form action="{{route('post.create')}}" method="POST">
+                    <form action="{{route('post.create')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="">Title:</label>
@@ -35,6 +39,9 @@
                         <div class="form-group">
                             <label for="">Content:</label>
                             <textarea type="text" class="form-control" name="content"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="image" type="file">
                         </div>
                         <button class="btn btn-primary">Save</button>
                     </form>

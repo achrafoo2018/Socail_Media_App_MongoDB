@@ -1,57 +1,39 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid">
+<style>
+</style>
+<div class="container">
     <div class="row justify-content-center">
-        <div class="">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    <table class="table table-hover">
-                        <thead>
-                          <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Title</th>
-                            <th scope="col">Content</th>
-                            <th scope="col">Created By</th>
-                            <th scope="col">Created At</th>
-                            <th scope="col">Updated At</th>
-                            <th scope="col">Action</th>
-                            <th scope="col"></th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($posts as $post)
-                                
-                          <tr>
-                            <td>{{$post->_id}}</td>
-                            <td>{{$post->title}}</td>
-                            <td>{{$post->content}}</td>
-                            <td>{{$post->created_by}}</td>
-                            <td>{{$post->created_at}}</td>
-                            <td>{{$post->updated_at}}</td>
-                            <td>
-                                <a href="{{route('post.form',$post->_id)}}" class="btn btn-warning btn-sm">Update</a>
-                            </td>
-                            <td>
-                              <a href="{{route('post.delete', $post->_id)}}" onclick="return confirm('Are you sure you want to delete this post?');" class="btn btn-danger btn-sm">Delete</a>
-                            </td>
-                          </tr>
-
-                          @endforeach
-                        </tbody>
-                      </table>
-                    
+      <div class="col-4">
+        @foreach ($posts as $post)
+        <div class="card bg-light" style="border-radius: 10px">
+            <div class="card-header text-center border-0">
+              <div class=""><h3>{{$post->title}}</h3></div>
+            </div>
+            <div class="card-body text-center" style="padding-left:0;padding-right:0;padding-bottom:0;background-color:rgba(0,0,0,.03)">
+                @if (session('status'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('status') }}
+                </div>
+                @endif
+                      <div class="text-left pl-2"><p>{{$post->content}}</p></div>
+                      <img style="width: 100%"  src="{{asset('storage/' . $post->image)}}" height="400px" alt="">
+            </div>
+            <div class="card-footer">
+                <div class="row text-center">
+                  <div class="col">
+                    <button class="btn btn-primary">Like</button>
+                  </div>
+                  <div class="col">
+                    <button class="btn btn-warning">Comment</button>
+                  </div>
                 </div>
             </div>
         </div>
+        <br><br>
+        @endforeach
+      </div>
     </div>
 </div>
 @endsection

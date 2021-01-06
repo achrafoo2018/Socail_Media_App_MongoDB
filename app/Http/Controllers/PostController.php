@@ -7,6 +7,13 @@ use App\Models\Post;
 
 class PostController extends Controller
 {
+
+    public function index()
+    {
+        $posts = Post::all();
+        return view('post.posts')->with('posts',$posts);
+    }
+
     public function form($_id = false){
         if($_id){
             $post = Post::findOrFail($_id);
@@ -16,6 +23,9 @@ class PostController extends Controller
 
     public function save(Request $request){
         $post = new Post($request->all());
+        if($request->hasFile('image')){    
+            $post->image = $request->image->store('uploads', 'public');
+        }
         $post->created_by = \Auth::user()->name;
         $post->save();
         if($post){
