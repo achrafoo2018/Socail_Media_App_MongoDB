@@ -13,7 +13,7 @@ class UserController extends Controller
         $user =  \Auth::user();
     	// Handle the user upload of avatar
     	if($request->hasFile('avatar')){
-            $user->image = $request->avatar->store('upload', 'public');
+            $user->image = $request->avatar->store('uploads', 'public');
     		$user->save();
     	}
 
