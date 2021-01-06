@@ -59,11 +59,12 @@ class PostController extends Controller
         foreach ($post->likes as $like) {
             if($like == \Auth::user()->_id){
                 $post->pull("likes", \Auth::user()->_id);
-                return redirect()->route('home');
+                return redirect()->route($_GET['route']);
             }
         }
         $post->push("likes", \Auth::user()->_id);
         $post->save();
-        return redirect()->route('home');
+        return redirect()->route($_GET['route']);
+
     }
 }
