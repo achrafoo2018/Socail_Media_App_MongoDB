@@ -18,6 +18,8 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::get('/profile', [App\Http\Controllers\UserController::class, 'profile'])->name('profile')->middleware('auth');
+Route::post('/profile', [App\Http\Controllers\UserController::class, 'update_avatar'])->middleware('auth');
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/posts', [App\Http\Controllers\PostController::class, 'index'])->name('posts');
