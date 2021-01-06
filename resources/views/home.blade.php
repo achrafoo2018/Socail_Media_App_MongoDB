@@ -31,11 +31,8 @@
             <div class="card-body">
               <p class="card-text">{{$post->content}}</p>
               <hr>
-              <button class="btn btn-primary" onclick="event.preventDefault();
-              document.getElementById('like-form').submit();"><i class="fa fa-thumbs-up"> Like</i> </button>
-              <form id="like-form" action="{{ route('like', $post->_id) }}" method="POST" class="d-none">
-                @csrf
-            </form>
+              <a class="btn btn-{{in_array(\Auth::user()->_id, $post->likes) ? "success":"primary"}}" href="{{ route('like', $post->_id) }}"><span class="font-weight-bold text-{{sizeof($post->likes)>0 ? "warning":"danger"}}">{{sizeof($post->likes)}} </span><i class="fa fa-thumbs-up"> Like</i> </a>
+
             </div>
         </div>
         @endforeach

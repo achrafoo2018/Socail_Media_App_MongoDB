@@ -28,6 +28,7 @@ class PostController extends Controller
             $post->image = $request->image->store('uploads', 'public');
         }
         $post->created_by = \Auth::user()->_id;
+        $post->likes = array();
         $post->save();
         if($post){
             return redirect()->route('home');
@@ -54,8 +55,14 @@ class PostController extends Controller
         else{dd("Error! Cannot delete this post");}
     }
     public function like($_id){
-        $post = Post::where('_id', $_id)->first();
-        $post->likes = array(\Auth::user()->_id);
+        $post = Post::findOrFail($_id);
+        foreach ($post->likes as $like) {
+            if($like == \Auth::user()->_id){
+                $post->pull("likes", \Auth::user()->_id);
+                return redirect()->route('home');
+            }
+        }
+        $post->push("likes", \Auth::user()->_id);
         $post->save();
         return redirect()->route('home');
     }

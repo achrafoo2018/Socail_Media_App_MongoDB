@@ -21,7 +21,7 @@ Auth::routes();
 Route::get('/profile', [App\Http\Controllers\UserController::class, 'profile'])->name('profile')->middleware('auth');
 Route::post('/profile', [App\Http\Controllers\UserController::class, 'update_avatar'])->middleware('auth');
 
-Route::post('/like/{_id}', [App\Http\Controllers\PostController::class, 'like'])->name('like')->middleware('auth');
+Route::get('/posts/like/{_id}', [App\Http\Controllers\PostController::class, 'like'])->name('like')->middleware('auth');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/posts', [App\Http\Controllers\PostController::class, 'index'])->name('posts');
 Route::get('/post/{_id?}', [App\Http\Controllers\PostController::class, 'form'])->name('post.form')->middleware('auth');
