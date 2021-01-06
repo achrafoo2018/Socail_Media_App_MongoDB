@@ -4,36 +4,41 @@
 <style>
 </style>
 <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-4">
+    <div class="row">
         @foreach ($posts as $post)
-        <div class="card bg-light" style="border-radius: 10px">
-            <div class="card-header text-center border-0">
-              <div class=""><h3>{{$post->title}}</h3></div>
-            </div>
-            <div class="card-body text-center" style="padding-left:0;padding-right:0;padding-bottom:0;background-color:rgba(0,0,0,.03)">
-                @if (session('status'))
-                <div class="alert alert-success" role="alert">
-                    {{ session('status') }}
-                </div>
+        @php
+            $user = App\Models\User::where('_id', $post->created_by)->first();
+        @endphp
+        <div class="card mr-5 mb-5" style="width: 20rem;">
+            <div class="mt-2 col-md-12">
+                <img src="{{asset('storage/'.$user->image)}}" style="width:50px; height:50px; border-radius:50%;" alt="profile picture">
+                <b>{{$user->name}}</b>
+                @if($user->_id == \Auth::user()->_id)
+                    <div class="dropdown float-right mt-2">
+                        <button class="btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        More
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="{{route('post.form',$post->_id)}}">Edit</a>
+                        <a class="dropdown-item" href="{{route('post.delete', $post->_id)}}">Delete</a>
+                        </div>
+                    </div>
                 @endif
-                      <div class="text-left pl-2"><p>{{$post->content}}</p></div>
-                      <img style="width: 100%"  src="{{asset('storage/' . $post->image)}}" height="400px" alt="">
             </div>
-            <div class="card-footer">
-                <div class="row text-center">
-                  <div class="col">
-                    <button class="btn btn-primary">Like</button>
-                  </div>
-                  <div class="col">
-                    <button class="btn btn-warning">Comment</button>
-                  </div>
-                </div>
+            <hr>
+            <h5 class="card-title text-center">{{$post->title}}</h5>
+            <img class="card-img-top" width="18rem" height="320rem" src="{{asset('storage/'.$post->image)}}" alt="Card image cap">
+            <div class="card-body">
+              <p class="card-text">{{$post->content}}</p>
+              <hr>
+              <button class="btn btn-primary" onclick="event.preventDefault();
+              document.getElementById('like-form').submit();"><i class="fa fa-thumbs-up"> Like</i> </button>
+              <form id="like-form" action="{{ route('like', $post->_id) }}" method="POST" class="d-none">
+                @csrf
+            </form>
             </div>
         </div>
-        <br><br>
         @endforeach
-      </div>
     </div>
 </div>
 @endsection

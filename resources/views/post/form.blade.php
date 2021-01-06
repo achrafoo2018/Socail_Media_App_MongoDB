@@ -8,7 +8,7 @@
                 <div class="card-header">Post Form</div>
 
                 <div class="card-body">
-                    @if ($post)
+                    @if ($post && $post->created_by == \Auth::user()->_id)
 
                     <form action="{{route('post.update', $post->_id)}}" method="POST" enctype="multipart/form-data">
                         @csrf
@@ -43,7 +43,7 @@
                         <div class="form-group">
                             <input class="form-control" name="image" type="file">
                         </div>
-                        <button class="btn btn-primary">Save</button>
+                        <button class="btn btn-primary">POST</button>
                     </form>
 
                     @endif

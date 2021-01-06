@@ -17,16 +17,17 @@ class PostController extends Controller
     public function form($_id = false){
         if($_id){
             $post = Post::findOrFail($_id);
+        }else{
+            $post = false;
         }
-        $post = false;
         return view('post.form',compact('post'));    }
 
     public function save(Request $request){
         $post = new Post($request->all());
-        if($request->hasFile('image')){    
+        if($request->hasFile('image')){
             $post->image = $request->image->store('uploads', 'public');
         }
-        $post->created_by = \Auth::user()->name;
+        $post->created_by = \Auth::user()->_id;
         $post->save();
         if($post){
             return redirect()->route('home');
@@ -51,5 +52,11 @@ class PostController extends Controller
             return redirect()->route('home');
         }
         else{dd("Error! Cannot delete this post");}
+    }
+    public function like($_id){
+        $post = Post::where('_id', $_id)->first();
+        $post->likes = array(\Auth::user()->_id);
+        $post->save();
+        return redirect()->route('home');
     }
 }
