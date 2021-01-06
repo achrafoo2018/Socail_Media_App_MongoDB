@@ -18,7 +18,8 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
+Route::get('/profile', [App\Http\Controllers\UserController::class, 'profile'])->name('profile')->middleware('auth');
+Route::post('/profile', [App\Http\Controllers\UserController::class, 'update_avatar'])->middleware('auth');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/post/{_id?}', [App\Http\Controllers\PostController::class, 'form'])->name('post.form')->middleware('auth');
 Route::post('/post/create', [App\Http\Controllers\PostController::class, 'save'])->name('post.create')->middleware('auth');
