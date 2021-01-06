@@ -31,7 +31,7 @@
             <div class="card-body">
               <p class="card-text">{{$post->content}}</p>
               <hr>
-              <a class="btn btn-{{in_array(\Auth::user()->_id, $post->likes) ? "success":"primary"}}" href="{{ route('like', $post->_id) }}?route=home"><span class="font-weight-bold text-{{sizeof($post->likes)>0 ? "warning":"danger"}}">{{sizeof($post->likes)}} </span><i class="fa fa-thumbs-up"> Like</i> </a>
+              <a class="btn btn-{{in_array(\Auth::user()->_id, $post->likes) ? "success":"primary"}}" href="{{ route('like', $post->_id) }}?route=home"><span class="font-weight-bold text-light">{{sizeof($post->likes)}}</span><i class="fa fa-thumbs-up"> Like</i> </a>
 
             </div>
         </div>
