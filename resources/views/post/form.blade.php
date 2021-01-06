@@ -9,7 +9,7 @@
 
                 <div class="card-body">
                     @if ($post)
-                        
+
                     <form action="{{route('post.update', $post->_id)}}" method="POST">
                         @csrf
                         @method('PUT')
@@ -25,8 +25,8 @@
                     </form>
 
                     @else
-                       
-                    <form action="/post/create" method="POST">
+
+                    <form action="{{route('post.create')}}" method="POST">
                         @csrf
                         <div class="form-group">
                             <label for="">Title:</label>
