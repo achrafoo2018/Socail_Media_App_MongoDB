@@ -8,12 +8,6 @@ use App\Models\Post;
 class PostController extends Controller
 {
 
-    public function index()
-    {
-        $posts = Post::all();
-        return view('post.posts')->with('posts',$posts);
-    }
-
     public function form($_id = false){
         if($_id){
             $post = Post::findOrFail($_id);
@@ -56,11 +50,9 @@ class PostController extends Controller
     }
     public function like($_id){
         $post = Post::findOrFail($_id);
-        foreach ($post->likes as $like) {
-            if($like == \Auth::user()->_id){
-                $post->pull("likes", \Auth::user()->_id);
-                return redirect()->route($_GET['route']);
-            }
+        if(in_array(\Auth::user()->_id, $post->likes)){
+            $post->pull("likes", \Auth::user()->_id);
+            return redirect()->route($_GET['route']);
         }
         $post->push("likes", \Auth::user()->_id);
         $post->save();
