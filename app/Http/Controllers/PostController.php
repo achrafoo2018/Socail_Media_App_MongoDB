@@ -50,11 +50,10 @@ class PostController extends Controller
     }
     public function like($_id){
         $post = Post::findOrFail($_id);
-        if(in_array(\Auth::user()->_id, $post->likes)){
+        if(in_array(\Auth::user()->_id, $post->likes))
             $post->pull("likes", \Auth::user()->_id);
-            return redirect()->route($_GET['route']);
-        }
-        $post->push("likes", \Auth::user()->_id);
+        else
+            $post->push("likes", \Auth::user()->_id);
         $post->save();
         return redirect()->route($_GET['route']);
 
