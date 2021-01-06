@@ -19,7 +19,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/posts', [App\Http\Controllers\PostController::class, 'index'])->name('posts');
 Route::get('/post/{_id?}', [App\Http\Controllers\PostController::class, 'form'])->name('post.form')->middleware('auth');
 Route::post('/post/create', [App\Http\Controllers\PostController::class, 'save'])->name('post.create')->middleware('auth');
 Route::put('/post/update/{_id}', [App\Http\Controllers\PostController::class, 'update'])->name('post.update')->middleware('auth');
