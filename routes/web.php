@@ -22,8 +22,10 @@ Route::get('/profile', [App\Http\Controllers\UserController::class, 'profile'])-
 Route::post('/profile', [App\Http\Controllers\UserController::class, 'updateUser'])->middleware('auth');
 
 Route::get('/posts/like/{_id}', [App\Http\Controllers\PostController::class, 'like'])->name('like')->middleware('auth');
+
 Route::get('/posts/comment/{_id}', [App\Http\Controllers\PostController::class, 'getComments'])->name('comment')->middleware('auth');
-Route::post('/posts/comment/{_id}', [App\Http\Controllers\PostController::class, 'addComment'])->middleware('auth');
+Route::post('/posts/comment/{_id}', [App\Http\Controllers\PostController::class, 'createComment'])->name('comment.create')->middleware('auth');
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/post/{_id?}', [App\Http\Controllers\PostController::class, 'form'])->name('post.form')->middleware('auth');
 Route::post('/post/create', [App\Http\Controllers\PostController::class, 'save'])->name('post.create')->middleware('auth');
