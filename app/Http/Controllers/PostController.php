@@ -86,7 +86,7 @@ class PostController extends Controller
                 'name' => $user->name,
                 'image' => $user->image
             );
-            $comment['created_at'] = Carbon::now();
+            $comment['created_at'] = ''.Carbon::now();
             $post->push('comments',$comment);
             $post->save();
             return \redirect()->route("comment", $post->_id);
