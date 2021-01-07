@@ -63,9 +63,9 @@ class PostController extends Controller
     }
 
     public function getComments($_id){
-        
+
         if($_id){
-            
+
             $post = Post::findOrFail($_id);
 
         }else{
@@ -76,9 +76,7 @@ class PostController extends Controller
     }
 
     public function createComment(Request $request, $_id){
-
         if($_id){
-            
             $post = Post::findOrFail($_id);
             $comment = array();
             $user = \Auth::user();
@@ -91,14 +89,11 @@ class PostController extends Controller
             $comment['created_at'] = Carbon::now();
             $post->push('comments',$comment);
             $post->save();
-            $comments = $post->comments;
-            return view('post.comments')
-                ->with(compact('post'))
-                ->with(compact('comments'));
+            return \redirect()->route("comment", $post->_id);
 
         }else{
             $post = false;
-            return view('post.comments',compact('post'));
+            return \redirect()->route("comment", $post->_id);
         }
 
     }

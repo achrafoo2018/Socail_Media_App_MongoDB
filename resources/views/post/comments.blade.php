@@ -18,18 +18,13 @@
                                 <p>{{$post->content}}</p>
                             </div>
                         </div>
-                    </div>                    
+                    </div>
                 </div>
                 <div class="card-footer">
-                    @for ($i=0; $i<sizeof($comments);$i++)                            
-                            <div>
-                                {{$comments[$i]['content']}}
-                            </div>
-                            <div>
-                                {{$comments[$i]['user']['name']}}
-                            </div>
-                            @endfor
-
+                    @foreach($post->comments as $comment)
+                        {{$comment['content']}}
+                        {{$comment['user']['name']}}
+                    @endforeach
                     <div>
                         <form action="{{route('comment.create',$post->_id)}}" method="POST">
                             @csrf
