@@ -47,8 +47,7 @@
 /*
  * Like Button
  */
-    
-
+ 
  #btn-counter { margin-right: 39px;}
 #btn-counter:after,
 #btn-counter:hover:after { text-shadow: none; }

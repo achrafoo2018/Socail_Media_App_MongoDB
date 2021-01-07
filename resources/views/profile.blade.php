@@ -114,7 +114,9 @@
     <hr>
         <div class="row ml-3">
             @include('post.posts')
+
         </div>
+      </div>
 
 </div>
 @endsection
