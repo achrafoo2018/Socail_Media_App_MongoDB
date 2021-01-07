@@ -20,4 +20,7 @@ class UserController extends Controller
     	return \redirect()->route('profile');
 
     }
+    public function settingsView(){
+        return view('settings', array('user' => \Auth::user()));
+    }
 }
