@@ -47,7 +47,7 @@
 /*
  * Like Button
  */
- 
+
  #btn-counter { margin-right: 39px;}
 #btn-counter:after,
 #btn-counter:hover:after { text-shadow: none; }
@@ -82,11 +82,16 @@
   zoom: 1;
 }
 
-    
+
 </style>
 <div class="container" style="margin:0 auto">
     <div class="row ml-3">
+        @foreach ($posts as $post)
+        @php
+            $user = App\Models\User::where('_id', $post->created_by['id'])->first();
+        @endphp
         @include('post.posts')
+        @endforeach
     </div>
 </div>
 @endsection

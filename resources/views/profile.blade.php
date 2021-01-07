@@ -47,7 +47,7 @@
 /*
  * Like Button
  */
-    
+
 
  #btn-counter { margin-right: 39px;}
 #btn-counter:after,
@@ -83,7 +83,7 @@
   zoom: 1;
 }
 
-    
+
 </style>
 <div class="container" style="margin:0 auto">
     <div class="row">
@@ -130,32 +130,9 @@
             <div class="row mt-3" style="margin-left: 1px">
                 @foreach ($posts as $post)
                 @php
-                    $user_ = App\Models\User::where('_id', $post->created_by["id"])->first();
+                    $user = App\Models\User::where('_id', $post->created_by['id'])->first();
                 @endphp
-                <div class="card mr-5 mb-5" style="width: 20rem;">
-                    <div class="mt-2 col-md-12">
-                        <img src="{{asset('storage/'.$user_->image)}}" style="width:50px; height:50px; border-radius:50%;" alt="profile picture">
-                        <b>{{$user_->name}}</b>
-                        @if($user_->_id == \Auth::user()->_id)
-                            <div class="dropdown float-right mt-2">
-                                <i class="fa fa-ellipsis-h fa-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="{{route('post.form',$post->_id)}}">Edit</a>
-                                <a class="dropdown-item" href="{{route('post.delete', $post->_id)}}">Delete</a>
-                                </div>
-                            </div>
-                        @endif
-                    </div>
-                    <hr>
-                    <h5 class="card-title text-center">{{$post->title}}</h5>
-                    <img class="card-img-top" width="18rem" height="320rem" src="{{asset('storage/'.$post->image)}}" alt="Card image cap">
-                    <div class="card-body">
-                      <p class="card-text">{{$post->content}}</p>
-                      <hr>
-                      <a class="btn btn-{{in_array(\Auth::user()->_id, $post->likes) ? "success":"primary"}}" href="{{ route('like', $post->_id) }}?route=profile"><span class="font-weight-bold mr-2">{{sizeof($post->likes)}} </span><i class="fa fa-thumbs-up"> Like</i> </a>
-
-                    </div>
-                </div>
+                @include('post.posts')
                 @endforeach
             </div>
 
