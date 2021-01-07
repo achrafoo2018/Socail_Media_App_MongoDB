@@ -64,7 +64,7 @@
                             @endif
                         @else
                         <form class="form-inline" style="margin-right: 150px;" method="GET">
-                            <input class="form-control mr-sm-2" type="text" name="filter" placeholder="Type here" aria-label="Search">
+                            <input class="form-control mr-sm-2" type="text" name="filter" {{isset($_GET['filter']) ? "value=".$_GET['filter']."":""}} placeholder="Type here" aria-label="Search">
                             <button class="btn btn-primary btn-rounded my-0" type="submit"><i class="fa fa-search"></i></button>
                           </form>
                         <li class="nav-item mr-2    ">
@@ -78,6 +78,7 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('profile') }}">Profile</a>
+                                    <a class="dropdown-item" href="{{ route('settings') }}">Settings</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

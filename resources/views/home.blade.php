@@ -68,9 +68,8 @@
                 </span>
                 @if($user->_id == \Auth::user()->_id)
                     <div class="dropdown float-right mt-2">
-                        <button class="btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        More
-                        </button>
+
+                        <i class="fa fa-ellipsis-h fa-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="{{route('post.form',$post->_id)}}">Edit</a>
                         <a class="dropdown-item" href="{{route('post.delete', $post->_id)}}">Delete</a>
