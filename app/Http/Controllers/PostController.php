@@ -58,4 +58,20 @@ class PostController extends Controller
         return redirect()->route($_GET['route']);
 
     }
+
+    public function getComments($_id){
+        
+        if($_id){
+            $post = Post::findOrFail($_id);
+        }else{
+            $post = false;
+        }
+        return view('post.comments')
+                ->with(compact('post'));
+                // ->with(compact('comments'));
+    }
+
+    public function addComment($_id){
+
+    }
 }
