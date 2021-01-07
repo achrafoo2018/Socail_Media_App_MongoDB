@@ -63,12 +63,12 @@
                                 </li>
                             @endif
                         @else
-                        <form class="form-inline mr-auto" method="GET">
+                        <form class="form-inline" style="margin-right: 150px;" method="GET">
                             <input class="form-control mr-sm-2" type="text" name="filter" placeholder="Type here" aria-label="Search">
                             <button class="btn btn-primary btn-rounded my-0" type="submit"><i class="fa fa-search"></i></button>
                           </form>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('post.form') }}">Post Form</a>
+                        <li class="nav-item mr-2    ">
+                            <a class="nav-link" href="{{ route('post.form') }}" style="font-size: 110%"><i class="fa fa-edit fa-lg"></i> New Post</a>
                         </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

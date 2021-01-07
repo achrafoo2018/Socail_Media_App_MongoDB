@@ -29,10 +29,10 @@ class HomeController extends Controller
             $posts = Post::where("title", "like", $_GET['filter'])
                             ->orWhere("content", "like", "%".$_GET['filter']."%")
                             ->orWhere("created_by.name", "like", "%".$_GET['filter']."%")
-                            ->orderByDesc('likes')
+                            ->orderByDesc('created_at')
                             ->get();
         }else{
-            $posts = Post::orderByDesc("likes")->get();
+            $posts = Post::orderByDesc("created_at")->get();
         }
         return view('home')->with('posts',$posts);
     }
