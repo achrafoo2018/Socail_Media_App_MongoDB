@@ -19,10 +19,7 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::get('/profile', [App\Http\Controllers\UserController::class, 'profile'])->name('profile')->middleware('auth');
-Route::post('/profile', [App\Http\Controllers\UserController::class, 'update_avatar'])->middleware('auth');
-
-Route::get('/settings', [App\Http\Controllers\UserController::class, 'settingsView'])->name('settings')->middleware('auth');
-Route::post('/settings', [App\Http\Controllers\UserController::class, 'ChangeSettings'])->middleware('auth');
+Route::post('/profile', [App\Http\Controllers\UserController::class, 'updateUser'])->middleware('auth');
 
 Route::get('/posts/like/{_id}', [App\Http\Controllers\PostController::class, 'like'])->name('like')->middleware('auth');
 Route::get('/posts/comment/{_id}', [App\Http\Controllers\PostController::class, 'getComments'])->name('comment')->middleware('auth');
