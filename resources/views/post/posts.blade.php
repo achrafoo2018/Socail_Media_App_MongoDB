@@ -1,4 +1,4 @@
-<div class="card mr-2 mb-5" style="width: 22rem;">
+<div class="card mr-4 mb-5" style="width: 21rem;">
     <div class="card-header">
             <img src="{{asset('storage/'.$user->image)}}" style="width:50px; height:50px; border-radius:50%;position:relative;bottom:15px;right:4px;" alt="profile picture">
         <span class="mt-1" style="display: inline-block;width:55%">
