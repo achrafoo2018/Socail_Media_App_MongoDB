@@ -21,7 +21,7 @@ class PostController extends Controller
         if($request->hasFile('image')){
             $post->image = $request->image->store('uploads', 'public');
         }
-        $post->created_by = \Auth::user()->_id;
+        $post->created_by = ["id" => \Auth::user()->_id, "name" => \Auth::user()->name];
         $post->likes = array();
         $post->save();
         if($post){

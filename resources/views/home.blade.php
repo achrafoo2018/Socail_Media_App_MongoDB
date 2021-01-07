@@ -7,7 +7,7 @@
     <div class="row">
         @foreach ($posts as $post)
         @php
-            $user = App\Models\User::where('_id', $post->created_by)->first();
+            $user = App\Models\User::where('_id', $post->created_by['id'])->first();
         @endphp
         <div class="card mr-5 mb-5" style="width: 20rem;">
             <div class="mt-2 col-md-12">

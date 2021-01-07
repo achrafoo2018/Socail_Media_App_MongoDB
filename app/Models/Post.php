@@ -12,7 +12,7 @@ class Post extends Model
 
     public function user(){
 
-        return $this->belongsTo('App\Models\User', 'created_by');
+        return $this->belongsTo('App\Models\User', 'created_by.id');
     }
 
 }

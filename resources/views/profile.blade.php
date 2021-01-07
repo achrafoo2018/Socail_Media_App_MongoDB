@@ -7,19 +7,31 @@
             <img src="{{asset('storage/'.$user->image) }}" style="width:150px; height:150px; float:left; border-radius:50%; margin-right:25px;">
             <h2>{{ $user->name }}</h2>
             <form enctype="multipart/form-data" method="POST">
-                <input type="file" name="avatar">
+                <div class="custom-file col-md-6">
+                    <input type="file" name="avatar" class="custom-file-input" id="validatedCustomFile" required>
+                    <label class="custom-file-label" for="validatedCustomFile">Choose profile picture</label>
+                    <div class="invalid-feedback">Example invalid custom file feedback</div>
+                  </div>
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <input type="submit" class="pull-right btn btn-sm btn-primary" value="Submit">
+                <input type="submit" class="pull-right btn btn-primary" value="Submit">
             </form>
-            <h4 class="mt-3">{{sizeof($posts)}} Posts</h4>
-
+            <h4 class="mt-3">{{sizeof($posts)}} Post{{sizeof($posts) == 1 ? "":"s"}}</h4>
+            <script>
+                $('#validatedCustomFile').on('change',function(){
+                    //get the file name
+                    var fileName = $(this).val();
+                    var fileName = fileName.replace('C:\\fakepath\\', " ");
+                    //replace the "Choose a file" label
+                    $(this).next('.custom-file-label').html(fileName);
+                })
+            </script>
         </div>
     </div>
     <hr>
         <div class="row">
             @foreach ($posts as $post)
             @php
-                $user = App\Models\User::where('_id', $post->created_by)->first();
+                $user = App\Models\User::where('_id', $post->created_by["id"])->first();
             @endphp
             <div class="card mr-5 mb-5" style="width: 20rem;">
                 <div class="mt-2 col-md-12">

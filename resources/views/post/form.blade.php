@@ -8,7 +8,7 @@
                 <div class="card-header">Post Form</div>
 
                 <div class="card-body">
-                    @if ($post && $post->created_by == \Auth::user()->_id)
+                    @if ($post && $post->created_by['id'] == \Auth::user()->_id)
 
                     <form action="{{route('post.update', $post->_id)}}" method="POST" enctype="multipart/form-data">
                         @csrf
@@ -22,10 +22,13 @@
                             <textarea type="text" class="form-control" name="content">{{$post->content}}</textarea>
                         </div>
                         <div class="form-group">
-                            <img src="{{asset('storage/' . $post->image)}}" alt="">
-                            <input class="form-control" name="image" type="file">
-                        </div>
-                        <button class="btn btn-primary">Save</button>
+                            <img src="{{asset('storage/' . $post->image)}}" alt="" width="343" height="250" class="mb-2">
+                            <div class="custom-file col-md-6">
+                                <input type="file" name="image" class="custom-file-input" id="validatedCustomFile" required>
+                                <label class="custom-file-label" for="validatedCustomFile">Choose image...</label>
+                                <div class="invalid-feedback">Example invalid custom file feedback</div>
+                            </div>                        </div>
+                        <button class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
                     </form>
 
                     @else
@@ -41,13 +44,25 @@
                             <textarea type="text" class="form-control" name="content"></textarea>
                         </div>
                         <div class="form-group">
-                            <input class="form-control" name="image" type="file">
-                        </div>
-                        <button class="btn btn-primary">POST</button>
+                            <div class="custom-file">
+                                <input type="file" name="image" class="custom-file-input" id="validatedCustomFile" required>
+                                <label class="custom-file-label" for="validatedCustomFile">Choose image...</label>
+                                <div class="invalid-feedback">Example invalid custom file feedback</div>
+                            </div>                        </div>
+                        <button class="btn btn-primary"><i class="fa fa-paper-plane"></i> POST</button>
                     </form>
 
                     @endif
                 </div>
+                <script>
+                    $('#validatedCustomFile').on('change',function(){
+                        //get the file name
+                        var fileName = $(this).val();
+                        var fileName = fileName.replace('C:\\fakepath\\', " ");
+                        //replace the "Choose a file" label
+                        $(this).next('.custom-file-label').html(fileName);
+                    })
+                </script>
             </div>
         </div>
     </div>

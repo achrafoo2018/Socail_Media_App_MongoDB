@@ -25,7 +25,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderByDesc("created_at")->get();
+        if(isset($_GET['filter']) && $_GET['filter'] != ""){
+            $posts = Post::where("title", "like", $_GET['filter'])
+                            ->orWhere("content", "like", "%".$_GET['filter']."%")
+                            ->orWhere("created_by.name", "like", "%".$_GET['filter']."%")
+                            ->orderByDesc('likes')
+                            ->get();
+        }else{
+            $posts = Post::orderByDesc("likes")->get();
+        }
         return view('home')->with('posts',$posts);
     }
 }

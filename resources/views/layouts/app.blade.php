@@ -23,11 +23,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://use.fontawesome.com/576a64e280.js"></script>
+<style>
+    body {
+    padding-top: 65px;
+}
 
+</style>
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar fixed-top navbar-expand-md navbar-light bg-light shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     MongoDB
@@ -58,11 +63,16 @@
                                 </li>
                             @endif
                         @else
+                        <form class="form-inline mr-auto" method="GET">
+                            <input class="form-control mr-sm-2" type="text" name="filter" placeholder="Type here" aria-label="Search">
+                            <button class="btn btn-primary btn-rounded my-0" type="submit"><i class="fa fa-search"></i></button>
+                          </form>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('post.form') }}">Post Form</a>
                         </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    <img src="{{asset('storage/'.Auth::user()->image)}}" style="width:30px; height:30px; border-radius:50%;" alt="profile picture">
                                     {{ Auth::user()->name }}
                                 </a>
 
