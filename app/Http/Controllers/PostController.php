@@ -58,8 +58,8 @@ class PostController extends Controller
         else
             $post->push("likes", \Auth::user()->_id);
         $post->save();
-        return redirect()->route($_GET['route']);
-
+        return json_encode($post);
+        exit;
     }
 
     public function getComments($_id){

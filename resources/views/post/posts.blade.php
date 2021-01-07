@@ -4,11 +4,11 @@
         <span class="mt-1" style="display: inline-block;width:55%">
             <b>{{$user->name}}</b><br>
             <small class="form-text text-muted" style="display: inline-block">
-                {{$post->created_at->toDateString()}}
+                <a href="{{ route('comment', $post->_id) }}">{{timeago($post->created_at)}}</a>
             </small>
         </span>
         @if($user->_id == \Auth::user()->_id)
-            <div class="dropdown float-right mt-2">
+            <div class="dropdown div_{{$post->_id}} float-right mt-2">
                 <i class="fa fa-ellipsis-h fa-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" href="{{route('post.form',$post->_id)}}">Edit</a>
@@ -28,7 +28,25 @@
             <a href="{{ route('comment', $post->_id) }}" class="btn btn-counter btn-warning"><i class="fa fa-comments mr-2"></i><span style="font-family: Arial, Helvetica, sans-serif">Comment</span></a>
           </div>
           <div class="d-inline float-right position-relative" style="left:5px;">
-            <a href="{{ route('like', $post->_id) }}?route={{\Route::current()->getName()}}" title="Like" id="btn-counter" class="btn btn-{{in_array(\Auth::user()->_id, $post->likes) ? "primary":"outline-primary"}}" data-count="{{sizeof($post->likes)}}"><i class="fa fa-thumbs-up mr-2"></i><span style="font-family: Arial, Helvetica, sans-serif">Like</span></a>
+            <a href="{{ route('like', $post->_id) }}?route={{\Route::current()->getName()}}" title="Like" id="btn-counter" class="like_button_{{$post->_id}} btn btn-{{in_array(\Auth::user()->_id, $post->likes) ? "primary":"outline-primary"}}" data-count="{{sizeof($post->likes)}}"><i class="fa fa-thumbs-up mr-2"></i><span style="font-family: Arial, Helvetica, sans-serif">Like</span></a>
           </div>
     </div>
 </div>
+<script>
+    $('.like_button_{{$post->_id}}').click(function(e) {
+        var url = "{{route('like', $post->_id)}}";
+        var form = $('.div_{{$post->_id}}');
+        $.ajax({
+            type:'get',
+            url:url,
+            dataType: "JSON",
+            async: false,
+            success:function(msg)
+            {
+                $('.like_button_{{$post->_id}}').html = "btn-sm";
+            }
+        });
+        e.preventDefault();
+
+    });
+    </script>

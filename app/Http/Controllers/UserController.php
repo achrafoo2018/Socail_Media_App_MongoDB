@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     public function profile(){
-    	return view('profile', array('user' => \Auth::user(), 'posts'=>Post::where("created_by.id", \Auth::user()->_id)->get()) );
+    	return view('profile', array('user' => \Auth::user(), 'posts'=>Post::where("created_by.id", \Auth::user()->_id)->orderByDesc("created_at")->get()) );
     }
     public function updateUser(Request $request){
         if($request->has("changeImage")){
