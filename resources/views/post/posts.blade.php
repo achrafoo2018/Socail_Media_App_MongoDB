@@ -124,7 +124,7 @@
             <a href="{{ route('comment', $post->_id) }}" class="btn btn-counter btn-warning" data-count="{{sizeof($post->comments)}}"><i class="fa fa-comments mr-2"></i><span style="font-family: Arial, Helvetica, sans-serif">Comment</span></a>
           </div>
           <div class="d-inline float-right position-relative" style="left:5px;">
-            <a href="{{ route('like', $post->_id) }}?route={{\Route::current()->getName()}}" title="Like" id="btn-counter" class="like_button_{{$post->_id}} btn btn-{{in_array(\Auth::user()->_id, $post->likes) ? "primary":"outline-primary"}}" data-count="{{sizeof($post->likes)}}"><i class="fa fa-thumbs-up mr-2"></i><span style="font-family: Arial, Helvetica, sans-serif">Like</span></a>
+            <a href="#" title="Like" id="btn-counter" class="like_button_{{$post->_id}} btn btn-{{in_array(\Auth::user()->_id, $post->likes) ? "primary":"outline-primary"}}" data-count="{{sizeof($post->likes)}}"><i class="fa fa-thumbs-up mr-2"></i><span style="font-family: Arial, Helvetica, sans-serif">Like</span></a>
           </div>
     </div>
 </div>
@@ -133,13 +133,22 @@
         var url = "{{route('like', $post->_id)}}";
         var form = $('.div_{{$post->_id}}');
         $.ajax({
-            type:'get',
+            type:'GET',
             url:url,
-            dataType: "JSON",
-            async: false,
-            success:function(msg)
-            {
-                $('.like_button_{{$post->_id}}').html = "btn-sm";
+            success:function(response){
+                console.log('success')
+                if($('.like_button_{{$post->_id}}').hasClass('btn-outline-primary')){
+                $('.like_button_{{$post->_id}}').addClass('btn-primary').removeClass('btn-outline-primary');
+                $('.like_button_{{$post->_id}}').attr('data-count',response.likes)
+                }
+                else{
+                $('.like_button_{{$post->_id}}').addClass('btn-outline-primary').removeClass('btn-primary');
+                $('.like_button_{{$post->_id}}').attr('data-count',response.likes);
+                }
+                // .replace( /(?:^|\s)btn-outline-primary(?!\S)/g , 'btn-primary' )
+            },
+            error: function(response){
+                console.log('error')
             }
         });
         e.preventDefault();
