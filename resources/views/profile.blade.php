@@ -11,7 +11,10 @@
 /*
  * Comment button style
  */
-.btn-counter { margin-right: 39px;}
+.btn-counter { margin-right: 39px;
+    font-weight: bold;
+
+}
 .btn-counter:after,
 .btn-counter:hover:after { text-shadow: none; }
 .btn-counter:after {
@@ -49,7 +52,9 @@
  */
 
 
- #btn-counter { margin-right: 39px;}
+ #btn-counter { margin-right: 39px;
+    font-weight: bold;
+ }
 #btn-counter:after,
 #btn-counter:hover:after { text-shadow: none; }
 #btn-counter:after {

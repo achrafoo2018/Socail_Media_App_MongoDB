@@ -38,6 +38,9 @@ class PostController extends Controller
         $post = Post::findOrFail($_id);
         $post->title = $request->title;
         $post->content = $request->content;
+        if($request->hasFile('image')){
+            $post->image = $request->image->store('uploads', 'public');
+        }
         $post->save();
         if($post){
             return redirect()->route('home');
@@ -116,19 +119,13 @@ class PostController extends Controller
         if($_id){
             $post = Post::findOrFail($_id);
             if($_cid){
-                // for($i=0;$i<sizeof($post->comments);$i++){
-                //     if($post->comments[$i]['_id']==$_cid){
-                //         $comments = $post->comments;
-                //         unset($comments[$i]);
-                //         $post->unset('comments');
-                //         $post->comments = $comments;
-                //         $post->save();
-                //         break;
-                //     }
-                // }
-                    $key = array_search($_cid,$post->comments);
-                    $post->pull('comments',$post->comments[$key]);
-                    $post->save();
+                for($i=0;$i<sizeof($post->comments);$i++){
+                    if($post->comments[$i]['_id']==$_cid){
+                        $post->pull('comments',$post->comments[$i]);
+                        $post->save();
+                        break;
+                    }
+                }
                 return \redirect()->route("comment", $post->_id);
             }
             return \redirect()->route("comment", $post->_id);

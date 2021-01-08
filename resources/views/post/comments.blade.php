@@ -118,9 +118,9 @@
                         <form action="@if(@isset($c)){{route('comment.edit.content',['_id'=>$post->_id,'_cid'=>$c['_id']])}}@else{{route('comment.create',$post->_id)}}@endif" method="POST">
                             @csrf
                             <div class="form-group">
-                                <textarea class="form-control" name="content" id="" cols="15" rows="3" @isset($c)autofocus @endisset>@if(@isset($c)){{$c['content']}}@endif</textarea>
+                                <textarea class="form-control" name="content" id="" cols="15" rows="3" required @isset($c)autofocus @endisset>@if(@isset($c)){{$c['content']}}@endif</textarea>
                             </div>
-                            <button class="btn btn-warning float-right">Comment</button>
+                            <button class="btn btn-warning float-right"><i class="fa fa-comment"></i> Comment</button>
                         </form>
                     </div>
                     <br>
