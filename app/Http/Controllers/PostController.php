@@ -57,13 +57,19 @@ class PostController extends Controller
     }
     public function like($_id){
         $post = Post::findOrFail($_id);
-        if(in_array(\Auth::user()->_id, $post->likes))
+        if(in_array(\Auth::user()->_id, $post->likes)){
             $post->pull("likes", \Auth::user()->_id);
-        else
+            $post->save();
+            return response()->json([
+                'likes' => sizeof($post->likes)
+            ]);
+
+        }else
             $post->push("likes", \Auth::user()->_id);
         $post->save();
-        return json_encode($post);
-        exit;
+        return response()->json([
+            'likes' => sizeof($post->likes)
+        ]);
     }
 
     public function getComments($_id){

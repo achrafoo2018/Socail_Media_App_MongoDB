@@ -133,13 +133,22 @@
         var url = "{{route('like', $post->_id)}}";
         var form = $('.div_{{$post->_id}}');
         $.ajax({
-            type:'get',
+            type:'GET',
             url:url,
-            dataType: "JSON",
-            async: false,
-            success:function(msg)
-            {
-                $('.like_button_{{$post->_id}}').html = "btn-sm";
+            success:function(response){
+                console.log('success')
+                if($('.like_button_{{$post->_id}}').hasClass('btn-outline-primary')){
+                $('.like_button_{{$post->_id}}').addClass('btn-primary').removeClass('btn-outline-primary');
+                $('.like_button_{{$post->_id}}').attr('data-count',response.likes)
+                }
+                else{
+                $('.like_button_{{$post->_id}}').addClass('btn-outline-primary').removeClass('btn-primary');
+                $('.like_button_{{$post->_id}}').attr('data-count',response.likes);
+                }
+                // .replace( /(?:^|\s)btn-outline-primary(?!\S)/g , 'btn-primary' )
+            },
+            error: function(response){
+                console.log('error')
             }
         });
         e.preventDefault();
