@@ -93,6 +93,7 @@
 @php
     if(isset($_GET['_id'])){
         $user = App\Models\User::where("_id", $_GET['_id'])->first();
+        $posts = App\Models\Post::where("created_by.id", $_GET['_id'])->get();
     }
 @endphp
 <div class="container" style="margin:0 auto">
@@ -188,7 +189,7 @@
                         </div>
                         <hr>
                         <div class="form-group row">
-                            <input type="password" name="currentPassword" class="form-control col ml-3" id="password" aria-describedby="emailHelp" placeholder="Enter current password">
+                            <input type="password" name="currentPassword" class="form-control col ml-3" id="currentPassword" aria-describedby="emailHelp" placeholder="Enter current password">
                             <button type="submit" class="btn btn-primary col-md-3 ml-2 mr-2" name="changeInformations">Submit</button>
                         </div>
 

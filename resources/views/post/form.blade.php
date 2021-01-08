@@ -5,7 +5,13 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Post Form</div>
+                <div class="card-header">
+                    @if ($post && $post->created_by['id'] == \Auth::user()->_id)
+                        Edit Post
+                    @else
+                        New Post
+                    @endif
+                </div>
 
                 <div class="card-body">
                     @if ($post && $post->created_by['id'] == \Auth::user()->_id)
@@ -22,13 +28,13 @@
                             <textarea type="text" class="form-control" name="content">{{$post->content}}</textarea>
                         </div>
                         <div class="form-group">
-                            <img src="{{asset('storage/' . $post->image)}}" alt="" width="343" height="250" class="mb-2">
-                            <div class="custom-file col-md-6">
-                                <input type="file" name="image" class="custom-file-input" id="validatedCustomFile" required>
+                            <img src="{{asset('storage/' . $post->image)}}" alt="" height="250" class="mb-2">
+                            <div class="custom-file">
+                                <input type="file" name="image" class="custom-file-input" id="validatedCustomFile">
                                 <label class="custom-file-label" for="validatedCustomFile">Choose image...</label>
                                 <div class="invalid-feedback">Example invalid custom file feedback</div>
                             </div>                        </div>
-                        <button class="btn btn-primary" style="padding: .6rem 2rem;"><i class="fa fa-save"></i> Save</button>
+                        <button class="btn btn-success btn-block" style="font-size: 108%;"><i class="fa fa-save"></i> Save</button>
                     </form>
 
                     @else
@@ -43,13 +49,13 @@
                             <label for="">Content:</label>
                             <textarea type="text" class="form-control" name="content"></textarea>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mt-4">
                             <div class="custom-file">
                                 <input type="file" name="image" class="custom-file-input" id="validatedCustomFile" required>
                                 <label class="custom-file-label" for="validatedCustomFile">Choose image...</label>
                                 <div class="invalid-feedback">Example invalid custom file feedback</div>
                             </div>                        </div>
-                        <button class="btn btn-primary"><i class="fa fa-paper-plane"></i> POST</button>
+                        <button class="btn btn-primary btn-block mt-4"> POST</button>
                     </form>
 
                     @endif

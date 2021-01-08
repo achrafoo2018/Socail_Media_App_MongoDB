@@ -26,21 +26,21 @@ class UserController extends Controller
             //     "email" => "required",
             //     "current_password" => "required"]);
             $user = \Auth::user();
-            if(Hash::check($request->current_password, $user->password)){
+            if(Hash::check($request->currentPassword, $user->password)){
                 $user->name = $request->name;
                 $user->email = $request->email;
                 $user->save();
                 $request->session()->flash("success", "Account updated Successfully");
-                return redirect(route("profile")."?tab=settings&&err=1");
+                return redirect(route("profile")."?tab=settings");
             }else{
                 $request->session()->flash("error", "Wrong password");
-                return redirect(route("profile")."?tab=settings&&eee=1");
+                return redirect(route("profile")."?tab=settings");
             }
         }else if($request->has("changePassword")){
             // $request->validate(["new_password" => "required|confirmed",
             //                     "current_password" => "required"]);
             $user = \Auth::user();
-            if(Hash::check($request->current_password, $user->password)){
+            if(Hash::check($request->currentPassword, $user->password)){
                 $user->password = Hash::make($request->new_password);
                 $user->save();
                 $request->session()->flash("success1", "Account updated Successfully");
