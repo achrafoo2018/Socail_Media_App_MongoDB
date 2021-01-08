@@ -96,9 +96,9 @@
                 @endphp
 <div class="card mr-4 mb-5" style="width: 21rem;">
     <div class="card-header">
-            <img src="{{asset('storage/'.$user->image)}}" style="width:50px; height:50px; border-radius:50%;position:relative;bottom:15px;right:4px;" alt="profile picture">
+            <img href="{{route('profile').'?_id='.$user->_id}}" src="{{asset('storage/'.$user->image)}}" style="width:50px; height:50px; border-radius:50%;position:relative;bottom:15px;right:4px;" alt="profile picture">
         <span class="mt-1" style="display: inline-block;width:55%">
-            <b>{{$user->name}}</b><br>
+            <a href="{{route('profile').'?_id='.$user->_id}}"><b>{{$user->name}}</b></a><br>
             <small class="form-text text-muted" style="display: inline-block">
                 <a href="{{ route('comment', $post->_id) }}" class="text-muted">{{timeago($post->created_at)}}</a>
             </small>
