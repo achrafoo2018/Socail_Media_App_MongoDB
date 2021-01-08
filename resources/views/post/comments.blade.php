@@ -120,7 +120,7 @@
                             <div class="form-group">
                                 <textarea class="form-control" name="content" id="" cols="15" rows="3" required @isset($c)autofocus @endisset>@if(@isset($c)){{$c['content']}}@endif</textarea>
                             </div>
-                            <button class="btn btn-warning float-right"><i class="fa fa-comment"></i> Comment</button>
+                            <button class="btn btn-warning float-right"><i class="fa fa-comment"></i> <b>Comment</b></button>
                         </form>
                     </div>
                     <br>

@@ -90,11 +90,17 @@
 
 
 </style>
+@php
+    if(isset($_GET['_id'])){
+        $user = App\Models\User::where("_id", $_GET['_id'])->first();
+    }
+@endphp
 <div class="container" style="margin:0 auto">
     <div class="row">
         <div class="col-md-6 col-md-offset-1">
             <img src="{{asset('storage/'.$user->image) }}" style="width:150px; height:150px; float:left; border-radius:50%; margin-right:25px;">
             <h2>{{ $user->name }}</h2>
+            @if($user == \Auth::user())
             <form enctype="multipart/form-data" method="POST">
                 <div class="custom-file col-md-6">
                     <input type="file" name="avatar" class="custom-file-input" id="validatedCustomFile" required>
@@ -104,6 +110,7 @@
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <input type="submit" class="pull-right btn btn-primary" value="Submit" name="changeImage">
             </form>
+            @endif
             <h4 class="mt-3">{{sizeof($posts)}} Post{{sizeof($posts) == 1 ? "":"s"}}</h4>
             <script>
                 $('#validatedCustomFile').on('change',function(){
@@ -119,12 +126,22 @@
     <br>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
-          <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><i class="fa fa-user-circle"></i> Profile</a>
+            @if((isset($_GET['tab']) && $_GET['tab'] != 'settings') || !isset($_GET['tab']))
 
+                <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><i class="fa fa-user-circle"></i> Profile</a>
+            @else
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><i class="fa fa-user-circle"></i> Profile</a>
+            @endif
         </li>
-        <li class="nav-item">
-          <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false"><i class="fa fa-cog"></i> Settings</a>
-        </li>
+        @if($user == \Auth::user())
+            <li class="nav-item">
+                @if((isset($_GET['tab']) && $_GET['tab'] == 'settings') )
+                    <a class="nav-link active show" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="true"><i class="fa fa-cog"></i> Settings</a>
+                @else
+                    <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false"><i class="fa fa-cog"></i> Settings</a>
+                @endif
+            </li>
+        @endif
       </ul>
       <div class="tab-content" id="myTabContent">
         @if((isset($_GET['tab']) && $_GET['tab'] != 'settings') || !isset($_GET['tab']))
@@ -139,10 +156,12 @@
             </div>
 
         </div>
+        @if($user == \Auth::user())
+
         @if(isset($_GET['tab']) && $_GET['tab'] == 'settings')
             <div class="tab-pane fade show active" id="settings" role="tabpanel" aria-labelledby="settings-tab" aria-selected="true">
         @else
-                <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+            <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
         @endif
             <div class="row">
                 <div class="col-md-5 card mt-3 ml-5">
@@ -206,6 +225,7 @@
                 </div>
             </div>
         </div>
+        @endif
       </div>
 
 </div>
