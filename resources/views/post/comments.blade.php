@@ -93,11 +93,76 @@
     }
   }
 @endphp
+<style>
+    /*
+ * Like Button
+ */
+ .btn {
+  display: inline-block;
+  position: relative;
+
+  text-decoration: none;
+}
+ #btn-counter { margin-right: 39px;
+ font-weight: bold;}
+#btn-counter:after,
+#btn-counter:hover:after { text-shadow: none; }
+#btn-counter:after {
+    height:30px;
+    width:40px;
+  border-radius: 3px;
+  border: 1px solid #d3d3d3;
+  background-color: #eee;
+  padding: 0 8px;
+  color: #777;
+  content: attr(data-count);
+  left: 108%;
+  position: absolute;
+  top: 4px;
+}
+#btn-counter:before {
+  transform: rotate(45deg);
+  filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.7071067811865476, M12=-0.7071067811865475, M21=0.7071067811865475, M22=0.7071067811865476, sizingMethod='auto expand');
+
+  background-color: #eee;
+  border: 1px solid #d3d3d3;
+  border-right: 0;
+  border-top: 0;
+  content: '';
+  position: absolute;
+  right: -9px;
+  top: 16px;
+  height: 6px;
+  width: 6px;
+  z-index: 1;
+  zoom: 1;
+}
+</style>
 <div class="container">
+    @php
+        $user = App\Models\User::where("_id", $post->created_by['id'])->first();
+    @endphp
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Comment Section</div>
+                <div class="card-header">
+                    <a href="{{route('profile').'?_id='.$user->_id}}"><img src="{{asset('storage/'.$user->image)}}" style="width:50px; height:50px; border-radius:50%;position:relative;bottom:15px;right:4px;" alt="profile picture"></a>
+        <span class="mt-1" style="display: inline-block;width:55%">
+            <a href="{{route('profile').'?_id='.$user->_id}}" style="color: black;"><b>{{$user->name}}</b></a><br>
+            <small class="form-text text-muted" style="display: inline-block">
+                <a href="{{ route('comment', $post->_id) }}" class="text-muted">{{timeago($post->created_at)}}</a>
+            </small>
+        </span>
+        @if($user->_id == \Auth::user()->_id)
+            <div class="dropdown div_{{$post->_id}} float-right mt-2">
+                <i class="fa fa-ellipsis-h fa-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="{{route('post.form',$post->_id)}}">Edit</a>
+                <a class="dropdown-item" href="{{route('post.delete', $post->_id)}}">Delete</a>
+                </div>
+            </div>
+        @endif
+                </div>
 
                 <div class="card-body">
                     <div class="row">
@@ -115,13 +180,25 @@
                 </div>
                 <div class="card-footer">
                     <div>
+
                         <form action="@if(@isset($c)){{route('comment.edit.content',['_id'=>$post->_id,'_cid'=>$c['_id']])}}@else{{route('comment.create',$post->_id)}}@endif" method="POST">
                             @csrf
                             <div class="form-group">
                                 <textarea class="form-control" name="content" id="" cols="15" rows="3" required @isset($c)autofocus @endisset>@if(@isset($c)){{$c['content']}}@endif</textarea>
                             </div>
-                            <button class="btn btn-warning float-right"><i class="fa fa-comment"></i> <b>Comment</b></button>
+                            <div>
+
+                                <div class="d-inline position-relative ml-2" style="right:5px;">
+                                    <a href="{{ route('like', $post->_id) }}?route={{\Route::current()->getName()}}" title="Like" id="btn-counter" class="like_button_{{$post->_id}} btn btn-{{in_array(\Auth::user()->_id, $post->likes) ? "primary":"outline-primary"}}" data-count="{{sizeof($post->likes)}}"><i class="fa fa-thumbs-up mr-2"></i><span style="font-family: Arial, Helvetica, sans-serif">Like</span></a>
+                                </div>
+                                <button class="btn btn-warning float-right"><i class="fa fa-comment"></i> <b>Comment</b></button>
+                            </div>
                         </form>
+                            <a class="mt-2 text-muted d-inline float-right position-relative" href="">
+                                {{sizeof($post->comments)}} Comment{{sizeof($post->comments) != 1 ? "s":""}}
+                            </a>
+
+
                     </div>
                     <br>
                     <br>
@@ -168,4 +245,31 @@
         </div>
     </div>
 </div>
+<script>
+    $('.like_button_{{$post->_id}}').click(function(e) {
+        var url = "{{route('like', $post->_id)}}";
+        var form = $('.div_{{$post->_id}}');
+        $.ajax({
+            type:'GET',
+            url:url,
+            success:function(response){
+                console.log('success')
+                if($('.like_button_{{$post->_id}}').hasClass('btn-outline-primary')){
+                $('.like_button_{{$post->_id}}').addClass('btn-primary').removeClass('btn-outline-primary');
+                $('.like_button_{{$post->_id}}').attr('data-count',response.likes)
+                }
+                else{
+                $('.like_button_{{$post->_id}}').addClass('btn-outline-primary').removeClass('btn-primary');
+                $('.like_button_{{$post->_id}}').attr('data-count',response.likes);
+                }
+                // .replace( /(?:^|\s)btn-outline-primary(?!\S)/g , 'btn-primary' )
+            },
+            error: function(response){
+                console.log('error')
+            }
+        });
+        e.preventDefault();
+
+    });
+    </script>
 @endsection
