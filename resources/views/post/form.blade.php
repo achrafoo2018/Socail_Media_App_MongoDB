@@ -28,7 +28,7 @@
                                 <label class="custom-file-label" for="validatedCustomFile">Choose image...</label>
                                 <div class="invalid-feedback">Example invalid custom file feedback</div>
                             </div>                        </div>
-                        <button class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
+                        <button class="btn btn-primary" style="padding: .6rem 2rem;"><i class="fa fa-save"></i> Save</button>
                     </form>
 
                     @else

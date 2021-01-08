@@ -100,7 +100,7 @@
         <span class="mt-1" style="display: inline-block;width:55%">
             <b>{{$user->name}}</b><br>
             <small class="form-text text-muted" style="display: inline-block">
-                <a href="{{ route('comment', $post->_id) }}">{{timeago($post->created_at)}}</a>
+                <a href="{{ route('comment', $post->_id) }}" class="text-muted">{{timeago($post->created_at)}}</a>
             </small>
         </span>
         @if($user->_id == \Auth::user()->_id)
@@ -120,10 +120,10 @@
       <p class="card-text">{{$post->content}}</p>
     </div>
     <div class="card-footer">
-        <div class="d-inline position-relative" style="right:10px;">
+        <div class="d-inline position-relative" style="left:10px;">
             <a href="{{ route('comment', $post->_id) }}" class="btn btn-counter btn-warning" data-count="{{sizeof($post->comments)}}"><i class="fa fa-comments mr-2"></i><span style="font-family: Arial, Helvetica, sans-serif">Comment</span></a>
           </div>
-          <div class="d-inline float-right position-relative" style="left:5px;">
+          <div class="d-inline float-left position-relative" style="right:5px;">
             <a href="{{ route('like', $post->_id) }}?route={{\Route::current()->getName()}}" title="Like" id="btn-counter" class="like_button_{{$post->_id}} btn btn-{{in_array(\Auth::user()->_id, $post->likes) ? "primary":"outline-primary"}}" data-count="{{sizeof($post->likes)}}"><i class="fa fa-thumbs-up mr-2"></i><span style="font-family: Arial, Helvetica, sans-serif">Like</span></a>
           </div>
     </div>
