@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Comment;
 use Carbon\Carbon;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 class PostController extends Controller
 {
@@ -80,6 +81,12 @@ class PostController extends Controller
             $post = Post::findOrFail($_id);
             $comment = array();
             $user = \Auth::user();
+            function unique_code($limit)
+            {
+            return substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, $limit);
+            }
+            $id = unique_code(9);
+            $comment['_id'] = $id;
             $comment['content'] = $request->content;
             $comment['user'] = array(
                 '_id' => $user->_id,
@@ -87,6 +94,7 @@ class PostController extends Controller
                 'image' => $user->image
             );
             $comment['created_at'] = ''.Carbon::now();
+
             $post->push('comments',$comment);
             $post->save();
             return \redirect()->route("comment", $post->_id);
@@ -96,5 +104,61 @@ class PostController extends Controller
             return \redirect()->route("comment", $post->_id);
         }
 
+    }
+
+    public function deleteComment($_id,$_cid){
+        if($_id){
+            $post = Post::findOrFail($_id);
+            if($_cid){
+                // for($i=0;$i<sizeof($post->comments);$i++){
+                //     if($post->comments[$i]['_id']==$_cid){
+                //         $comments = $post->comments;
+                //         unset($comments[$i]);
+                //         $post->unset('comments');
+                //         $post->comments = $comments;
+                //         $post->save();
+                //         break;
+                //     }
+                // }
+                    $key = array_search($_cid,$post->comments);
+                    $post->pull('comments',$post->comments[$key]);
+                    $post->save();
+                return \redirect()->route("comment", $post->_id);
+            }
+            return \redirect()->route("comment", $post->_id);
+        }
+        return \redirect()->route("comment", $post->_id);
+
+    }
+
+    public function editComment($_id,$_cid){
+            $post = Post::findOrFail($_id);
+            // $key = array_search($_cid,$post->comments);
+            for($i=0;$i<sizeof($post->comments);$i++){
+                if($post->comments[$i]['_id']==$_cid){
+                    $c = $post->comments[$i];
+                    break;
+                }
+            }
+            // $c = $post->comments[$key];
+            return view('post.comments')
+                    ->with(compact('post'))
+                    ->with('c',$c); 
+    }
+    public function editContentComment(Request $request,$_id,$_cid){
+            $post = Post::findOrFail($_id);
+            // $key = array_search($_cid,$post->comments);
+            for($i=0;$i<sizeof($post->comments);$i++){
+                if($post->comments[$i]['_id']==$_cid){
+                    $comment = $post->comments[$i];
+                    break;
+                }
+            }
+            $post->pull('comments',$comment);
+            $post->save();
+            $comment['content'] = $request->content;
+            $post->push('comments',$comment);
+            $post->save();
+            return \redirect()->route("comment", $post->_id);
     }
 }

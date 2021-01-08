@@ -23,8 +23,11 @@ Route::post('/profile', [App\Http\Controllers\UserController::class, 'updateUser
 
 Route::get('/posts/like/{_id}', [App\Http\Controllers\PostController::class, 'like'])->name('like')->middleware('auth');
 
-Route::get('/posts/comment/{_id}', [App\Http\Controllers\PostController::class, 'getComments'])->name('comment')->middleware('auth');
-Route::post('/posts/comment/{_id}', [App\Http\Controllers\PostController::class, 'createComment'])->name('comment.create')->middleware('auth');
+Route::get('/posts/comment/{_id}/{_cid?}', [App\Http\Controllers\PostController::class, 'getComments'])->name('comment')->middleware('auth');
+Route::post('/posts/comment/{_id}/{_cid?}', [App\Http\Controllers\PostController::class, 'createComment'])->name('comment.create')->middleware('auth');
+Route::get('/posts/comment/delete/{_id}/{_cid}', [App\Http\Controllers\PostController::class, 'deleteComment'])->name('comment.delete')->middleware('auth');
+Route::get('/posts/comment/edit/{_id}/{_cid}', [App\Http\Controllers\PostController::class, 'editComment'])->name('comment.edit')->middleware('auth');
+Route::post('/posts/comment/edit/{_id}/{_cid}', [App\Http\Controllers\PostController::class, 'editContentComment'])->name('comment.edit.content')->middleware('auth');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/post/{_id?}', [App\Http\Controllers\PostController::class, 'form'])->name('post.form')->middleware('auth');
