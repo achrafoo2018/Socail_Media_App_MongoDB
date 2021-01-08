@@ -118,7 +118,7 @@
                 $('#validatedCustomFile').on('change',function(){
                     //get the file name
                     var fileName = $(this).val();
-                    var fileName = fileName.replace('C:\\fakepath\\', " ");
+                    var fileName = fileName.replace('C:\\fakepath\\', " ").substring(0,18);
                     //replace the "Choose a file" label
                     $(this).next('.custom-file-label').html(fileName);
                 })
