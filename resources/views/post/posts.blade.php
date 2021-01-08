@@ -117,7 +117,11 @@
     <h5 class="card-title text-center">{{$post->title}}</h5>
     <img class="card-img-top" id="image-{{$post->_id}}" width="18rem" height="320rem" src="{{asset('storage/'.$post->image)}}" alt="Card image cap">
     <div class="card-body">
-      <div class="card-text"><p class="d-inline show-less-{{$post->_id}}" id="show-less-{{$post->_id}}">{{$post->content}}</p>&nbsp;<a class="d-inline show-more-btn" href="#image-{{$post->_id}}">[Show more]</a></div>
+      <div class="card-text"><p class="d-inline show-less-{{$post->_id}}" id="show-less-{{$post->_id}}">{{$post->content}}</p>
+        @if(strlen($post->content) > 60)
+            &nbsp;<a class="d-inline show-more-btn" href="#image-{{$post->_id}}"><small class="text-muted showMoreText">Show more</small></a>
+        @endif
+    </div>
     </div>
     <div class="card-footer">
         <div class="d-inline position-relative" style="left:10px;">
@@ -166,10 +170,12 @@
 
         $('.show-less-{{$post->_id}}').text('{{$post->content}}');
         $('.show-less-{{$post->_id}}').addClass('show-more-{{$post->_id}}').removeClass('show-less-{{$post->_id}}');
+        $('.showMoreText').text('Show less');
         }
         else {
           var content = '{{$post->content}}';
           var showLess = content.substring(0,50);
+          $('.showMoreText').text('Show More');
           $('.show-more-{{$post->_id}}').text(showLess);
           $('.show-more-{{$post->_id}}').addClass('show-less-{{$post->_id}}').removeClass('show-more-{{$post->_id}}');
         }

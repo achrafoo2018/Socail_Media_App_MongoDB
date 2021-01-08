@@ -89,6 +89,7 @@
 }
 
 
+
 </style>
 @php
     if(isset($_GET['_id'])){
@@ -157,6 +158,7 @@
             </div>
 
         </div>
+
         @if($user == \Auth::user())
 
         @if(isset($_GET['tab']) && $_GET['tab'] == 'settings')
@@ -165,64 +167,75 @@
             <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
         @endif
             <div class="row">
-                <div class="col-md-5 card mt-3 ml-5">
-                    @if(Session::has('error'))
-                        <div class="alert alert-danger mt-2" role="alert">
-                                {{Session::get('error')}}
-                        </div>
-                    @endif
-                    @if(Session::has('success'))
-                    <div class="alert alert-success mt-2" role="alert">
-                            {{Session::get('success')}}
+                <div class="col-md-5 card mt-3 ml-5" style="padding: 0px !important;">
+                    <div class="card-header">
+                        General
                     </div>
-                    @endif
-                    <form method="POST" class="mt-3">
-                        @csrf
-                        <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" name="name" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter your name" value="{{$user->name}}">
+                    <div class="card-body">
+                        @if(Session::has('error'))
+                            <div class="alert alert-danger mt-2" role="alert">
+                                    {{Session::get('error')}}
+                            </div>
+                        @endif
+                        @if(Session::has('success'))
+                        <div class="alert alert-success mt-2" role="alert">
+                                {{Session::get('success')}}
                         </div>
-                        <div class="form-group">
-                        <label for="exampleInputEmail1">Email address</label>
-                        <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" value="{{$user->email}}">
-                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                        </div>
-                        <hr>
-                        <div class="form-group row">
-                            <input type="password" name="currentPassword" class="form-control col ml-3" id="currentPassword" aria-describedby="emailHelp" placeholder="Enter current password">
-                            <button type="submit" class="btn btn-primary col-md-3 ml-2 mr-2" name="changeInformations">Submit</button>
-                        </div>
+                        @endif
+                        <form method="POST">
+                            @csrf
+                            <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" name="name" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter your name" value="{{$user->name}}">
+                            </div>
+                            <div class="form-group">
+                            <label for="exampleInputEmail1">Email address</label>
+                            <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" value="{{$user->email}}">
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <input type="password" name="currentPassword" class="form-control col ml-3" id="currentPassword" aria-describedby="emailHelp" placeholder="Enter current password">
+                                <button type="submit" class="btn btn-primary col-md-3 ml-2 mr-2" name="changeInformations">Submit</button>
+                            </div>
 
-                    </form>
-                </div>
-                <div class="col-md-5 card mt-3 ml-5">
-                    @if(Session::has('error1'))
-                        <div class="alert alert-danger mt-2" role="alert">
-                                {{Session::get('error1')}}
-                        </div>
-                    @endif
-                    @if(Session::has('success1'))
-                    <div class="alert alert-success mt-2" role="alert">
-                            {{Session::get('success1')}}
+                        </form>
                     </div>
-                    @endif
-                    <form method="POST" class="mt-3">
-                        @csrf
-                        <div class="form-group">
-                        <label for="new_password">New Password</label>
-                        <input type="password" name="new_password" class="form-control" id="new_password" aria-describedby="emailHelp" placeholder="Enter new password">
-                        </div>
-                        <div class="form-group" style="margin-bottom: 40px;">
-                        <label for="confirm_password">Confirm Password</label>
-                        <input type="password" name="new_password_confirm" class="form-control" id="confirm_password" aria-describedby="emailHelp" placeholder="Re-type password">
-                        </div>
-                        <hr>
-                        <div class="form-group row">
-                            <input type="password" name="currentPassword" class="form-control col ml-3" id="currentPassword" aria-describedby="emailHelp" placeholder="Enter current password">
-                            <button type="submit" class="btn btn-primary col-md-3 ml-2 mr-2" name="changePassword">Submit</button>
-                        </div>
+                    </div>
+                <div class="col-md-5 card mt-3 ml-5" style="padding: 0px !important;">
+                    <div class="card-header">
+                        Change Password
+                    </div>
+                    <div class="card-body">
 
-                    </form>
+                        @if(Session::has('error1'))
+                            <div class="alert alert-danger mt-2" role="alert">
+                                    {{Session::get('error1')}}
+                            </div>
+                        @endif
+                        @if(Session::has('success1'))
+                        <div class="alert alert-success mt-2" role="alert">
+                                {{Session::get('success1')}}
+                        </div>
+                        @endif
+                        <form method="POST">
+                            @csrf
+                            <div class="form-group">
+                            <label for="new_password">New Password</label>
+                            <input type="password" name="new_password" class="form-control" id="new_password" aria-describedby="emailHelp" placeholder="Enter new password">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 40px;">
+                            <label for="confirm_password">Confirm Password</label>
+                            <input type="password" name="new_password_confirm" class="form-control" id="confirm_password" aria-describedby="emailHelp" placeholder="Re-type password">
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <input type="password" name="currentPassword" class="form-control col ml-3" id="currentPassword" aria-describedby="emailHelp" placeholder="Enter current password">
+                                <button type="submit" class="btn btn-primary col-md-3 ml-2 mr-2" name="changePassword">Submit</button>
+                            </div>
+
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -230,4 +243,12 @@
       </div>
 
 </div>
+<script>
+    document.getElementById("settings-tab").onclick = function(){
+        window.history.pushState({}, null, "{{route('profile')}}?tab=settings");
+    };
+    document.getElementById("profile-tab").onclick = function(){
+        window.history.pushState({}, null, "{{route('profile')}}?tab=profile");
+    };
+</script>
 @endsection
