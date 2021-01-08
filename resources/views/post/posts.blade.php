@@ -96,9 +96,9 @@
                 @endphp
 <div class="card mr-4 mb-5" style="width: 21rem;">
     <div class="card-header">
-            <img href="{{route('profile').'?_id='.$user->_id}}" src="{{asset('storage/'.$user->image)}}" style="width:50px; height:50px; border-radius:50%;position:relative;bottom:15px;right:4px;" alt="profile picture">
+            <a href="{{route('profile').'?_id='.$user->_id}}"><img src="{{asset('storage/'.$user->image)}}" style="width:50px; height:50px; border-radius:50%;position:relative;bottom:15px;right:4px;" alt="profile picture"></a>
         <span class="mt-1" style="display: inline-block;width:55%">
-            <a href="{{route('profile').'?_id='.$user->_id}}"><b>{{$user->name}}</b></a><br>
+            <a href="{{route('profile').'?_id='.$user->_id}}" style="color: black;"><b>{{$user->name}}</b></a><br>
             <small class="form-text text-muted" style="display: inline-block">
                 <a href="{{ route('comment', $post->_id) }}" class="text-muted">{{timeago($post->created_at)}}</a>
             </small>
@@ -115,9 +115,9 @@
     </div>
     <hr class="mt-0">
     <h5 class="card-title text-center">{{$post->title}}</h5>
-    <img class="card-img-top" width="18rem" height="320rem" src="{{asset('storage/'.$post->image)}}" alt="Card image cap">
+    <img class="card-img-top" id="image-{{$post->_id}}" width="18rem" height="320rem" src="{{asset('storage/'.$post->image)}}" alt="Card image cap">
     <div class="card-body">
-      <p class="card-text">{{$post->content}}</p>
+      <div class="card-text"><p class="d-inline show-less-{{$post->_id}}" id="show-less-{{$post->_id}}">{{$post->content}}</p>&nbsp;<a class="d-inline show-more-btn" href="#image-{{$post->_id}}">[Show more]</a></div>
     </div>
     <div class="card-footer">
         <div class="d-inline position-relative" style="left:10px;">
@@ -154,6 +154,26 @@
         e.preventDefault();
 
     });
+    </script>
+    <script>
+      var content = '{{$post->content}}';
+      var showLess = content.substring(0,50);
+      $('.show-less-{{$post->_id}}').text(showLess);
+    </script>
+    <script>
+      $('.show-more-btn').click(function(){
+        if($('#show-less-{{$post->_id}}').hasClass('show-less-{{$post->_id}}')){
+
+        $('.show-less-{{$post->_id}}').text('{{$post->content}}');
+        $('.show-less-{{$post->_id}}').addClass('show-more-{{$post->_id}}').removeClass('show-less-{{$post->_id}}');
+        }
+        else {
+          var content = '{{$post->content}}';
+          var showLess = content.substring(0,50);
+          $('.show-more-{{$post->_id}}').text(showLess);
+          $('.show-more-{{$post->_id}}').addClass('show-less-{{$post->_id}}').removeClass('show-more-{{$post->_id}}');
+        }
+      });
     </script>
         @endforeach
 
