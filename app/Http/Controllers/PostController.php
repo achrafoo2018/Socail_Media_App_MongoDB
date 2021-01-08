@@ -143,7 +143,7 @@ class PostController extends Controller
             // $c = $post->comments[$key];
             return view('post.comments')
                     ->with(compact('post'))
-                    ->with('c',$c); 
+                    ->with('c',$c);
     }
     public function editContentComment(Request $request,$_id,$_cid){
             $post = Post::findOrFail($_id);
